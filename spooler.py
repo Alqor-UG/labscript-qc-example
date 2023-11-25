@@ -17,12 +17,6 @@ from utils.schemes import (
 
 remoteClient = runmanager.remote.Client()
 
-# remote files
-REMOTE_BASE_PATH = "."
-RECEIVED_JSON_FOLDER = f"{REMOTE_BASE_PATH}"
-EXECUTED_JSON_FOLDER = f"{REMOTE_BASE_PATH}/executed"
-JSON_STATUS_FOLDER = f"{REMOTE_BASE_PATH}/status"
-
 
 # in the labscript ini file this is equivalent to the the path `labscriptlib`
 

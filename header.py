@@ -33,6 +33,8 @@ def func(shot_context: dict, t: str) -> None:
     """
     The function that is added to the function runner.
     """
+
+    # pylint: disable=C0415
     import csv
     from lyse import Run
 

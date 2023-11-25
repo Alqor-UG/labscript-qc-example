@@ -90,12 +90,14 @@ class MotSpooler(Spooler):
         self, json_dict: dict, status_msg_dict: dict
     ) -> tuple[ResultDict, dict]:
         """
-        The function that translates the json with the instructions into some circuit and executes it.
-        It performs several checks for the job to see if it is properly working.
-        If things are fine the job gets added the list of things that should be executed.
+        The function that translates the json with the instructions into some circuit
+        and executes it. It performs several checks for the job to see if it is properly
+        working. If things are fine the job gets added the list of things that should be
+        executed.
 
-        json_dict: The job dictonary of all the instructions.
-        status_msg_dict: the status dictionary of the job we are treating.
+        Args:
+            json_dict: The job dictonary of all the instructions.
+            status_msg_dict: the status dictionary of the job we are treating.
         """
         job_id = status_msg_dict["job_id"]
 

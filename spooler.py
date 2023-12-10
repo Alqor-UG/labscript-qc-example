@@ -24,6 +24,7 @@ EXP_SCRIPT_FOLDER = config("EXP_SCRIPT_FOLDER")
 
 # local files
 HEADER_PATH = f"{EXP_SCRIPT_FOLDER}/header.py"
+REMOTE_EXPERIMENTS_PATH = f"{EXP_SCRIPT_FOLDER}/remote_experiments"
 
 # how long should we wait for runs until we have a look again ?
 T_WAIT = 2
@@ -75,7 +76,7 @@ def gen_script_and_globals(json_dict: dict, job_id: str) -> ExperimentDict:
 
     remoteClient.set_globals(globals_dict)
     script_name = f"experiment_{globals_dict['job_id']}.py"
-    exp_script = os.path.join(EXP_SCRIPT_FOLDER, script_name)
+    exp_script = os.path.join(REMOTE_EXPERIMENTS_PATH, script_name)
     ins_list = json_dict[next(iter(json_dict))]["instructions"]
     print(f"File path: {exp_script}")
     code = ""

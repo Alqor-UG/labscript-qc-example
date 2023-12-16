@@ -23,8 +23,8 @@ remoteClient = runmanager.remote.Client()
 EXP_SCRIPT_FOLDER = config("EXP_SCRIPT_FOLDER")
 
 # local files
-HEADER_PATH = f"{EXP_SCRIPT_FOLDER}/header.py"
-REMOTE_EXPERIMENTS_PATH = f"{EXP_SCRIPT_FOLDER}/remote_experiments"
+HEADER_PATH = os.path.join(EXP_SCRIPT_FOLDER, "header.py")
+REMOTE_EXPERIMENTS_PATH = os.path.join(EXP_SCRIPT_FOLDER, "remote_experiments")
 
 # how long should we wait for runs until we have a look again ?
 T_WAIT = 2

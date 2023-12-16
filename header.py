@@ -39,7 +39,8 @@ def func(shot_context: dict, t: str) -> None:
     from lyse import Run
 
     # we have to write it at the right position
-    csv_file_path = "/Users/fredjendrzejewski/output.csv"
+    # csv_file_path = "/Users/fredjendrzejewski/output.csv"
+    csv_file_path = "C:/Users/BASOARO/Documents/output_test.csv"
     # aaaaand save it to the hdf5
 
     # Open the CSV file in read mode
@@ -82,7 +83,8 @@ class ExperimentClass:
         """
         print("Measure atoms in the the MOT.")
         # we have to write it at the right position
-        csv_file_path = "/Users/fredjendrzejewski/output.csv"
+        # csv_file_path = "/Users/fredjendrzejewski/output.csv"
+        csv_file_path = "C:/Users/BASOARO/Documents/output_test.csv"
 
         # Open the CSV file in write mode
         with open(csv_file_path, mode="w", newline="") as csv_file:

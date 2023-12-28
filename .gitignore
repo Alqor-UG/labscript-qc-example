@@ -1,3 +1,4 @@
 __pycache__/
 Experiment_NaLi.py
 remote_experiments/*
+.env

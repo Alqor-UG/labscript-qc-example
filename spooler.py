@@ -1,15 +1,16 @@
 """
-This is the file that creates the labscript file and sends it to the BLACS.
+This is the file that creates the labscript file and sends it to the BLACS. It is unlikely
+that we will need to change this file. It is a bit messy but it works.
 """
 import os
 from time import sleep
 from decouple import config
 import numpy as np
 
-import runmanager.remote
-from lyse import Run
+import runmanager.remote  # pylint: disable=import-error
+from lyse import Run  # pylint: disable=import-error
 
-from utils.schemes import (
+from sqooler.schemes import (
     ExperimentDict,
     create_memory_data,
 )

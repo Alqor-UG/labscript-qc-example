@@ -8,12 +8,16 @@ from typing import Tuple, Literal, List, Optional
 from pydantic import Field, BaseModel, ValidationError
 from typing_extensions import Annotated
 
-from utils.schemes import (
+from sqooler.schemes import (
     Spooler,
     ResultDict,
 )
 
-from .spooler import gen_script_and_globals, modify_shot_output_folder, remoteClient
+from spooler import (  # pylint: disable=import-error
+    gen_script_and_globals,
+    modify_shot_output_folder,
+    remoteClient,
+)
 
 N_MAX_SHOTS = 1000000
 N_MAX_ATOMS = 500
@@ -133,25 +137,25 @@ class MotSpooler(Spooler):
                 return result_dict, status_msg_dict
 
             status_msg_dict["detail"] += (
-                "; Failed dimensionality test. Too many atoms. File will be deleted. Error message : "
+                ";Failed dimensionality test. Too many atoms. File will be deleted. Error message: "
                 + dim_err_msg
             )
             status_msg_dict["error_message"] += (
-                "; Failed dimensionality test. Too many atoms. File will be deleted. Error message :  "
+                ";Failed dimensionality test. Too many atoms. File will be deleted. Error message: "
                 + dim_err_msg
             )
             status_msg_dict["status"] = "ERROR"
             return result_dict, status_msg_dict
-        else:
-            status_msg_dict["detail"] += (
-                "; Failed json sanity check. File will be deleted. Error message : "
-                + err_msg
-            )
-            status_msg_dict["error_message"] += (
-                "; Failed json sanity check. File will be deleted. Error message : "
-                + err_msg
-            )
-            status_msg_dict["status"] = "ERROR"
+
+        status_msg_dict["detail"] += (
+            "; Failed json sanity check. File will be deleted. Error message : "
+            + err_msg
+        )
+        status_msg_dict["error_message"] += (
+            "; Failed json sanity check. File will be deleted. Error message : "
+            + err_msg
+        )
+        status_msg_dict["status"] = "ERROR"
         return result_dict, status_msg_dict
 
 

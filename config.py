@@ -13,7 +13,11 @@ from sqooler.schemes import (
     ResultDict,
 )
 
-from spooler import gen_script_and_globals, modify_shot_output_folder, remoteClient
+from spooler import (  # pylint: disable=import-error
+    gen_script_and_globals,
+    modify_shot_output_folder,
+    remoteClient,
+)
 
 N_MAX_SHOTS = 1000000
 N_MAX_ATOMS = 500

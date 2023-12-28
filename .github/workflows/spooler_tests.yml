@@ -24,9 +24,12 @@ jobs:
     - name: Run pylint
       run: |
         poetry run pylint maintainer.py
+        poetry run pylint config.py
     - name: Run black
       run: |
         poetry run black --check .
     - name: Run mypy
       run: |
         poetry run mypy maintainer.py
+        poetry run mypy config.py
+        poetry run mypy spooler.py

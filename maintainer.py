@@ -10,7 +10,7 @@ from sqooler.storage_providers import MongodbProvider
 from sqooler.schemes import MongodbLoginInformation
 from sqooler.utils import update_backends, main
 
-from config import spooler_object
+from config import spooler_object  # pylint: disable=import-error
 
 # configure the backends that are accessible to the maintainer
 # typicall this is the spooler object from the experiment and only one backend is needed here.

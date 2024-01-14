@@ -20,11 +20,13 @@ jobs:
     - name: Install Dependencies
       run: |
         pipx install poetry
-        poetry install  
+        poetry install --no-root
+        export PYTHONPATH=$PYTHONPATH:$PWD
     - name: Run pylint
       run: |
         poetry run pylint maintainer.py
         poetry run pylint config.py
+        poetry run pylint test_mot.py
     - name: Run black
       run: |
         poetry run black --check .
@@ -33,3 +35,4 @@ jobs:
         poetry run mypy maintainer.py
         poetry run mypy config.py
         poetry run mypy spooler.py
+        poetry run mypy test_mot.py

@@ -7,15 +7,37 @@ from typing import Union
 import pytest
 from pydantic import ValidationError
 
-from sqooler.utils import run_json_circuit
-from .config import (
+from sqooler.schemes import gate_dict_from_list, ResultDict
+
+from config import (
     spooler_object as spooler,
     MotExperiment,
     MeasureBarrierInstruction,
     LoadInstruction,
 )
 
-from utils.schemes import gate_dict_from_list, ResultDict
+
+def run_json_circuit(json_dict: dict, job_id: Union[int, str]) -> ResultDict:
+    """
+    A support function that executes the job.
+
+    Args:
+        json_dict: the job dict that will be treated
+        job_id: the number of the job
+
+    Returns:
+        the results dict
+    """
+    status_msg_dict = {
+        "job_id": job_id,
+        "status": "None",
+        "detail": "None",
+        "error_message": "None",
+    }
+
+    result_dict, status_msg_dict = spooler.add_job(json_dict, status_msg_dict)
+    assert status_msg_dict["status"] == "DONE", "Job failed"
+    return result_dict
 
 
 def test_pydantic_exp_validation() -> None:
@@ -217,6 +239,7 @@ def test_spooler_config() -> None:
     config_dict = {
         "description": ("Setup of an atomic mot."),
         "version": "0.1",
+        "display_name": "",
         "cold_atom_type": "spin",
         "gates": [],
         "max_experiments": 1000,
@@ -231,9 +254,11 @@ def test_spooler_config() -> None:
         "wire_order": "interleaved",
         "num_species": 1,
         "operational": True,
+        "pending_jobs": None,
+        "status_msg": None,
     }
-    spooler_config_dict = spooler.get_configuration()
-    assert spooler_config_dict == config_dict
+    spooler_config = spooler.get_configuration()
+    assert spooler_config.model_dump() == config_dict
 
 
 def test_add_job() -> None:

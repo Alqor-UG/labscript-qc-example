@@ -21,6 +21,7 @@ jobs:
       run: |
         pipx install poetry
         poetry install --no-root
+        export PYTHONPATH=$PYTHONPATH:$PWD
     - name: Run pylint
       run: |
         poetry run pylint maintainer.py

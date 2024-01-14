@@ -8,17 +8,18 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-sqooler = {git = "https://github.com/Alqor-UG/sqooler.git"}
 python-decouple = "^3.6"
 numpy = "^1.24.3"
 lyse = "^3.2.3"
 runmanager = "^3.2.0"
+sqooler = "^0.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.8.0"
 pylint = "^3.0.3"
 black = "^23.7.0"
+pytest = "^7.4.4"
 
 [build-system]
 requires = ["poetry-core"]

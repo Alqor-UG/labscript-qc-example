@@ -20,7 +20,7 @@ jobs:
     - name: Install Dependencies
       run: |
         pipx install poetry
-        poetry install  
+        poetry install --no-root
     - name: Run pylint
       run: |
         poetry run pylint maintainer.py

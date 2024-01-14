@@ -9,7 +9,7 @@ from pydantic import ValidationError
 
 from sqooler.schemes import gate_dict_from_list, ResultDict
 
-from .config import (
+from config import (
     spooler_object as spooler,
     MotExperiment,
     MeasureBarrierInstruction,
@@ -239,6 +239,7 @@ def test_spooler_config() -> None:
     config_dict = {
         "description": ("Setup of an atomic mot."),
         "version": "0.1",
+        "display_name": "",
         "cold_atom_type": "spin",
         "gates": [],
         "max_experiments": 1000,
@@ -253,9 +254,11 @@ def test_spooler_config() -> None:
         "wire_order": "interleaved",
         "num_species": 1,
         "operational": True,
+        "pending_jobs": None,
+        "status_msg": None,
     }
-    spooler_config_dict = spooler.get_configuration()
-    assert spooler_config_dict == config_dict
+    spooler_config = spooler.get_configuration()
+    assert spooler_config.model_dump() == config_dict
 
 
 def test_add_job() -> None:

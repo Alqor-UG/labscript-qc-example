@@ -7,8 +7,8 @@ from typing import Union
 import pytest
 from pydantic import ValidationError
 
-
-from mot.config import (
+from sqooler.utils import run_json_circuit
+from .config import (
     spooler_object as spooler,
     MotExperiment,
     MeasureBarrierInstruction,
@@ -16,29 +16,6 @@ from mot.config import (
 )
 
 from utils.schemes import gate_dict_from_list, ResultDict
-
-
-def run_json_circuit(json_dict: dict, job_id: Union[int, str]) -> ResultDict:
-    """
-    A support function that executes the job.
-
-    Args:
-        json_dict: the job dict that will be treated
-        job_id: the number of the job
-
-    Returns:
-        the results dict
-    """
-    status_msg_dict = {
-        "job_id": job_id,
-        "status": "None",
-        "detail": "None",
-        "error_message": "None",
-    }
-
-    result_dict, status_msg_dict = spooler.add_job(json_dict, status_msg_dict)
-    assert status_msg_dict["status"] == "DONE", "Job failed"
-    return result_dict
 
 
 def test_pydantic_exp_validation() -> None:

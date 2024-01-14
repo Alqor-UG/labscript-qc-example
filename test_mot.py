@@ -7,6 +7,7 @@ from typing import Union
 import pytest
 from pydantic import ValidationError
 
+from sqooler.schemes import gate_dict_from_list, ResultDict
 
 from .config import (
     spooler_object as spooler,
@@ -14,8 +15,6 @@ from .config import (
     MeasureBarrierInstruction,
     LoadInstruction,
 )
-
-from sqooler.schemes import gate_dict_from_list, ResultDict
 
 
 def run_json_circuit(json_dict: dict, job_id: Union[int, str]) -> ResultDict:

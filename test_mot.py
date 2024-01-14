@@ -8,14 +8,14 @@ import pytest
 from pydantic import ValidationError
 
 
-from mot.config import (
+from .config import (
     spooler_object as spooler,
     MotExperiment,
     MeasureBarrierInstruction,
     LoadInstruction,
 )
 
-from utils.schemes import gate_dict_from_list, ResultDict
+from sqooler.schemes import gate_dict_from_list, ResultDict
 
 
 def run_json_circuit(json_dict: dict, job_id: Union[int, str]) -> ResultDict:

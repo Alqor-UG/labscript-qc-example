@@ -4,6 +4,18 @@ This template allows you to set up your machine for remote control through the q
 
 ## Setup and installation
 
+The recommended fashion is to download the released version of the labscript-qc example. You can clone it through:
+
+``` 
+git clone --branch v0.1.1 --single-branch https://github.com/Alqor-UG/labscript-qc-example.git
+```
+
+If you want to have the latest version of the labscript-qc example, you can clone it through:
+
+```
+git clone https://github.com/Alqor-UG/labscript-qc-example.git
+```
+
 - Clone the repository into the `.../userlib/labscriptlib/EXPERIMENT-NAME` folder.
 - Adapt the `connection_table.py` such that it defines the proper connections between the different devices.
 - Adapt the `header.py` such that it defines the proper connections and functions.

@@ -4,14 +4,11 @@ In this module we define all the configuration parameters for the mot device.
 No runs are started here. The entire logic is implemented in the `spooler.py` module.
 """
 
-from typing import Tuple, Literal, List, Optional
-from pydantic import Field, BaseModel, ValidationError
+from typing import Literal, List, Optional
+from pydantic import Field, BaseModel
 from typing_extensions import Annotated
 
-from sqooler.schemes import (
-    Spooler,
-    ResultDict,
-)
+from sqooler.schemes import Spooler, ResultDict, StatusMsgDict
 
 from spooler import (  # pylint: disable=import-error
     gen_script_and_globals,
@@ -19,7 +16,7 @@ from spooler import (  # pylint: disable=import-error
     remoteClient,
 )
 
-N_MAX_SHOTS = 1000000
+N_MAX_SHOTS = 100
 N_MAX_ATOMS = 500
 MAX_EXPERIMENTS = 1000
 
@@ -80,19 +77,9 @@ class MotSpooler(Spooler):
     The spooler class that handles all the circuit logic.
     """
 
-    def check_experiment(self, exper_dict: dict) -> Tuple[str, bool]:
-        """
-        Check the validity of the experiment.
-        """
-        try:
-            MotExperiment(**exper_dict)
-            return "", True
-        except ValidationError as err:
-            return str(err), False
-
     def add_job(
-        self, json_dict: dict, status_msg_dict: dict
-    ) -> tuple[ResultDict, dict]:
+        self, json_dict: dict, status_msg_dict: StatusMsgDict
+    ) -> tuple[ResultDict, StatusMsgDict]:
         """
         The function that translates the json with the instructions into some circuit
         and executes it. It performs several checks for the job to see if it is properly
@@ -103,9 +90,9 @@ class MotSpooler(Spooler):
             json_dict: The job dictonary of all the instructions.
             status_msg_dict: the status dictionary of the job we are treating.
         """
-        job_id = status_msg_dict["job_id"]
+        job_id = status_msg_dict.job_id
 
-        result_dict: ResultDict = {
+        result_draft: dict = {
             "display_name": self.display_name,
             "backend_version": self.version,
             "job_id": job_id,
@@ -115,7 +102,6 @@ class MotSpooler(Spooler):
             "header": {},
             "results": [],
         }
-
         err_msg, json_is_fine = self.check_json_dict(json_dict)
         if json_is_fine:
             # check_hilbert_space_dimension
@@ -128,34 +114,38 @@ class MotSpooler(Spooler):
                     modify_shot_output_folder(job_id + "/" + str(exp))
 
                     # Here we generate the ciruit
-                    result_dict["results"].append(self.gen_circuit(exp_dict, job_id))
+                    result_draft["results"].append(self.gen_circuit(exp_dict, job_id))
 
-                status_msg_dict[
-                    "detail"
-                ] += "; Passed json sanity check; Compilation done. Shots sent to solver."
-                status_msg_dict["status"] = "DONE"
+                status_msg_dict.detail += "; Passed json sanity check; Compilation done. \
+                    Shots sent to solver."
+                status_msg_dict.status = "DONE"
+                result_dict = ResultDict(**result_draft)
                 return result_dict, status_msg_dict
 
-            status_msg_dict["detail"] += (
+            status_msg_dict.detail += (
                 ";Failed dimensionality test. Too many atoms. File will be deleted. Error message: "
                 + dim_err_msg
             )
-            status_msg_dict["error_message"] += (
+            status_msg_dict.error_message += (
                 ";Failed dimensionality test. Too many atoms. File will be deleted. Error message: "
                 + dim_err_msg
             )
-            status_msg_dict["status"] = "ERROR"
+            status_msg_dict.status = "ERROR"
+
+            result_dict = ResultDict(**result_draft)
             return result_dict, status_msg_dict
 
-        status_msg_dict["detail"] += (
+        status_msg_dict.detail += (
             "; Failed json sanity check. File will be deleted. Error message : "
             + err_msg
         )
-        status_msg_dict["error_message"] += (
+        status_msg_dict.error_message += (
             "; Failed json sanity check. File will be deleted. Error message : "
             + err_msg
         )
-        status_msg_dict["status"] = "ERROR"
+        status_msg_dict.status = "ERROR"
+
+        result_dict = ResultDict(**result_draft)
         return result_dict, status_msg_dict
 
 
@@ -166,6 +156,7 @@ spooler_object = MotSpooler(
         "measure": MeasureBarrierInstruction,
         "load": LoadInstruction,
     },
+    device_config=MotExperiment,
     n_wires=1,
     version="0.1",
     description="Setup of an atomic mot.",

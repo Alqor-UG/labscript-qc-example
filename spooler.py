@@ -10,11 +10,8 @@ import numpy as np
 import runmanager.remote  # pylint: disable=import-error
 from lyse import Run  # pylint: disable=import-error
 
-from sqooler.schemes import (
-    ExperimentDict,
-    create_memory_data,
-)
-
+from sqooler.schemes import ExperimentDict
+from sqooler.utils import create_memory_data
 
 remoteClient = runmanager.remote.Client()
 

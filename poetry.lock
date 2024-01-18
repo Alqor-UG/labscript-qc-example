@@ -1934,7 +1934,7 @@ files = [
 
 [[package]]
 name = "sqooler"
-version = "0.3.0"
+version = "0.4.0a0"
 description = "Code that enables validated cloud access to quantum hardware (simulators)"
 optional = false
 python-versions = "^3.10"
@@ -1952,7 +1952,7 @@ setuptools = "^69.0.3"
 type = "git"
 url = "https://github.com/Alqor-UG/sqooler.git"
 reference = "HEAD"
-resolved_reference = "bba95a2ca3307672ba7baae33133ae025617adad"
+resolved_reference = "23849fc1db44534140a7d78d92d0b5b023ea4d51"
 
 [[package]]
 name = "stone"

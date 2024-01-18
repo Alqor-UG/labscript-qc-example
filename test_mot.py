@@ -5,7 +5,7 @@ Test module for the mot file.
 import pytest
 from pydantic import ValidationError
 
-from sqooler.schemes import gate_dict_from_list, StatusMsgDict
+from sqooler.schemes import gate_dict_from_list
 from sqooler.utils import run_json_circuit
 from config import (
     spooler_object as spooler,
@@ -139,7 +139,7 @@ def test_load_gate() -> None:
     job_id = "81"
     data = run_json_circuit(job_payload, job_id, spooler)
 
-    shots_array = data.results[0]["data"][  # pylint: disable=unsubscriptable-object
+    shots_array = data["results"][0]["data"][  # pylint: disable=unsubscriptable-object
         "memory"
     ]
     print(shots_array)
@@ -242,17 +242,11 @@ def test_add_job() -> None:
     }
 
     job_id = "41"
-    status_msg_draft: dict = {
-        "job_id": job_id,
-        "status": "None",
-        "detail": "None",
-        "error_message": "None",
-    }
-    status_msg_dict = StatusMsgDict(**status_msg_draft)
-    result_dict, status_msg_dict = spooler.add_job(job_payload, status_msg_dict)
+
+    result_dict = run_json_circuit(job_payload, job_id, spooler)
     # assert that all the elements in the result dict memory are of string '1 0'
     expected_value = "31"
-    for element in result_dict.results[0][  # pylint: disable=unsubscriptable-object
+    for element in result_dict["results"][0][  # pylint: disable=unsubscriptable-object
         "data"
     ]["memory"]:
         assert (

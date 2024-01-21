@@ -5,7 +5,7 @@ Test module for the mot file.
 import pytest
 from pydantic import ValidationError
 
-from sqooler.schemes import gate_dict_from_list
+from sqooler.spoolers import gate_dict_from_list
 from sqooler.utils import run_json_circuit
 from config import (
     spooler_object as spooler,

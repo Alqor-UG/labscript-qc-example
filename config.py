@@ -7,13 +7,14 @@ No runs are started here. The entire logic is implemented in the `spooler.py` mo
 from typing import Literal, List, Optional
 from pydantic import Field, BaseModel
 from typing_extensions import Annotated
+from decouple import config
 
-from sqooler.schemes import LabscriptSpooler
+import runmanager.remote  # pylint: disable=import-error
+from lyse import Run  # pylint: disable=import-error
 
-from spooler import (  # pylint: disable=import-error
-    gen_script_and_globals,
-    remoteClient,
-)
+from sqooler.spoolers import LabscriptSpooler
+from sqooler.schemes import LabscriptParams
+
 
 N_MAX_SHOTS = 100
 N_MAX_ATOMS = 500
@@ -71,6 +72,13 @@ class MotExperiment(BaseModel):
     seed: Optional[int] = None
 
 
+# further detailled params for the config
+labscript_params = LabscriptParams(
+    exp_script_folder=config("EXP_SCRIPT_FOLDER"), t_wait=2
+)
+
+remoteClient = runmanager.remote.Client()
+
 # This is the spooler object that is used by the main function.
 spooler_object = LabscriptSpooler(
     ins_schema_dict={
@@ -80,6 +88,8 @@ spooler_object = LabscriptSpooler(
     },
     remote_client=remoteClient,
     device_config=MotExperiment,
+    labscript_params=labscript_params,
+    run=Run,
     n_wires=1,
     version="0.1",
     description="Setup of an atomic mot.",
@@ -87,6 +97,3 @@ spooler_object = LabscriptSpooler(
     n_max_shots=N_MAX_SHOTS,
     operational=True,
 )
-
-# Now also add the function that generates the circuit
-spooler_object.gen_circuit = gen_script_and_globals

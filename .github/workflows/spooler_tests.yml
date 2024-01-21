@@ -34,5 +34,4 @@ jobs:
       run: |
         poetry run mypy maintainer.py
         poetry run mypy config.py
-        poetry run mypy spooler.py
         poetry run mypy test_mot.py

@@ -1939,25 +1939,21 @@ files = [
 
 [[package]]
 name = "sqooler"
-version = "0.4.0a0"
+version = "0.4.0"
 description = "Code that enables validated cloud access to quantum hardware (simulators)"
 optional = false
-python-versions = "^3.10"
-files = []
-develop = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "sqooler-0.4.0-py3-none-any.whl", hash = "sha256:70e808170bb20efeafc6a4cd744418cea4b4b8574d028c88a83b1172488d26c2"},
+    {file = "sqooler-0.4.0.tar.gz", hash = "sha256:0facecba7f12c17af90b9cf11a9c72e8f02586aac1329d6922469b127b537071"},
+]
 
 [package.dependencies]
-dropbox = "^11.36.2"
-pydantic = "^2.3.0"
-pymongo = "^4.3.3"
-regex = "^2023.6.3"
-setuptools = "^69.0.3"
-
-[package.source]
-type = "git"
-url = "https://github.com/Alqor-UG/sqooler.git"
-reference = "HEAD"
-resolved_reference = "c5e6e502eec6ac0f25273e1b8bfba073477fb16c"
+dropbox = ">=11.36.2,<12.0.0"
+pydantic = ">=2.3.0,<3.0.0"
+pymongo = ">=4.3.3,<5.0.0"
+regex = ">=2023.6.3,<2024.0.0"
+setuptools = ">=69.0.3,<70.0.0"
 
 [[package]]
 name = "stone"
@@ -2110,4 +2106,4 @@ windows-curses = {version = "*", markers = "sys_platform == \"win32\""}
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "0c5dc836e71a02b720e2cbe1c404ff1e1ad9d6e52b25f5b6e9c526013b41d884"
+content-hash = "9b4f3b03c6cad8e4731b3365be8deaa1aef1e502917ac1ace0d23e0ec93eb7a2"

@@ -1939,13 +1939,13 @@ files = [
 
 [[package]]
 name = "sqooler"
-version = "0.4.0"
+version = "0.5.0"
 description = "Code that enables validated cloud access to quantum hardware (simulators)"
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "sqooler-0.4.0-py3-none-any.whl", hash = "sha256:70e808170bb20efeafc6a4cd744418cea4b4b8574d028c88a83b1172488d26c2"},
-    {file = "sqooler-0.4.0.tar.gz", hash = "sha256:0facecba7f12c17af90b9cf11a9c72e8f02586aac1329d6922469b127b537071"},
+    {file = "sqooler-0.5.0-py3-none-any.whl", hash = "sha256:3aba0b8efeab4d11dcacb0c8083cc2dc56080c4176a5deb74b067e1336d872aa"},
+    {file = "sqooler-0.5.0.tar.gz", hash = "sha256:815a5ef21e372f8cb668e7190f90d95da20ce9d41989ff3b3f1102203f6f3dc8"},
 ]
 
 [package.dependencies]
@@ -2106,4 +2106,4 @@ windows-curses = {version = "*", markers = "sys_platform == \"win32\""}
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "1ff5f4f96fec8dca409ca68d36e691d9698433c3ca166a661193c51eeae2223f"
+content-hash = "3db1d7be6df1b2d3496a1c505810931e9a319a1e49918cc7d20388c8b19010c7"

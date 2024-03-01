@@ -11,7 +11,7 @@ python = "^3.10"
 python-decouple = "^3.6"
 numpy = "^1.24.3"
 lyse = "^3.2.3"
-runmanager = "^3.2.0"
+runmanager = "^3.2.1"
 sqooler = "^0.4.0"
 
 

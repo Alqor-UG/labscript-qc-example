@@ -6,7 +6,7 @@ from decouple import config
 
 # import the storage provider that you would like to use
 # currently we have dropbox and mongodb
-from sqooler.storage_providers import MongodbProvider
+from sqooler.storage_providers.mongodb import MongodbProvider
 from sqooler.schemes import MongodbLoginInformation
 from sqooler.utils import update_backends, main
 

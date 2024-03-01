@@ -1824,26 +1824,26 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "runmanager"
-version = "3.2.0"
+version = "3.2.1"
 description = "Graphical control of parameterised experiments composed in labscript"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "runmanager-3.2.0-py3-none-any.whl", hash = "sha256:f8fcaa46fd9bb922395ed0f3cb027b8852a54722a1bc0a0e34b24335d70860b0"},
-    {file = "runmanager-3.2.0.tar.gz", hash = "sha256:ec6c4693f0326c43896e83cb8029fc7ecae7e53c85cb4f2ef0ba6b1a82d99540"},
+    {file = "runmanager-3.2.1-py3-none-any.whl", hash = "sha256:05593b4687546e9f4ab63604827b99bd7262a038b04372fa4b2d84fbe8096bd9"},
+    {file = "runmanager-3.2.1.tar.gz", hash = "sha256:009b047207231577100f4cccf8d01fdd018c39c968bc4b35c62e97aa08c76ceb"},
 ]
 
 [package.dependencies]
 desktop-app = ">=0.1.2"
 importlib-metadata = "*"
 labscript = ">=3.0.0"
-labscript-utils = ">=3.0.0"
+labscript-utils = ">=3.3.0"
 matplotlib = "*"
 pandas = ">=0.13"
 qtutils = ">=2.2.2"
 
 [package.extras]
-docs = ["PyQt5", "Sphinx (==4.4.0)", "m2r (==0.2.1)", "mistune (<2.0.0)", "recommonmark (==0.6.0)", "sphinx-rtd-theme (==0.5.2)"]
+docs = ["PyQt5", "Sphinx (==7.2.6)", "myst-parser (==2.0.0)", "sphinx-rtd-theme (==2.0.0)"]
 pyqt = ["PyQt5"]
 
 [[package]]
@@ -2106,4 +2106,4 @@ windows-curses = {version = "*", markers = "sys_platform == \"win32\""}
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9d5657dcbb35f671e0ff932400b7b1d0f083feca572863cb136f7a651f874033"
+content-hash = "1ff5f4f96fec8dca409ca68d36e691d9698433c3ca166a661193c51eeae2223f"

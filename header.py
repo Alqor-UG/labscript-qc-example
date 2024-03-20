@@ -41,7 +41,7 @@ def func(shot_context: dict, t: str) -> None:
 
     # we have to write it at the right position
     csv_file_path = "/Users/fredjendrzejewski/output.csv"
-    # aaaaand save it to the hdf5
+    # and save it to the hdf5
 
     # Open the CSV file in read mode
     with open(csv_file_path, mode="r") as csv_file:

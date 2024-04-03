@@ -218,6 +218,8 @@ def test_spooler_config() -> None:
         "operational": True,
         "pending_jobs": None,
         "status_msg": None,
+        "last_queue_check": None,
+        "sign": False,
     }
     spooler_config = spooler.get_configuration()
     assert spooler_config.model_dump() == config_dict

@@ -4,7 +4,6 @@ Test module for the mot file.
 
 import uuid
 import pytest
-from typing import Iterator
 from pydantic import ValidationError
 
 from sqooler.spoolers import gate_dict_from_list

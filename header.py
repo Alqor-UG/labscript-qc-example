@@ -2,6 +2,9 @@
 The start of the labscript experimental sequence.
 """
 
+import os
+from decouple import config
+
 from labscript import start, stop, add_time_marker, AnalogOut, DigitalOut
 from labscript_devices.DummyPseudoclock.labscript_devices import DummyPseudoclock
 from labscript_devices.DummyIntermediateDevice import DummyIntermediateDevice
@@ -40,8 +43,8 @@ def func(shot_context: dict, t: str) -> None:
     from lyse import Run
 
     # we have to write it at the right position
-    csv_file_path = "/Users/fredjendrzejewski/output.csv"
-    # and save it to the hdf5
+    csv_base_path = config("CSV_BASE_PATH")
+    csv_file_path = os.path.join(csv_base_path, "output.csv")
 
     # Open the CSV file in read mode
     with open(csv_file_path, mode="r") as csv_file:
@@ -86,7 +89,8 @@ class ExperimentClass:
         """
         print("Measure atoms in the the MOT.")
         # we have to write it at the right position
-        csv_file_path = "/Users/fredjendrzejewski/output.csv"
+        csv_base_path = config("CSV_BASE_PATH")
+        csv_file_path = os.path.join(csv_base_path, "output.csv")
 
         # Open the CSV file in write mode
         with open(csv_file_path, mode="w", newline="") as csv_file:

@@ -1,0 +1,37 @@
+name: Spooler_tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+    - name: Install Dependencies
+      run: |
+        pipx install poetry
+        poetry install --no-root
+        export PYTHONPATH=$PYTHONPATH:$PWD
+    - name: Run pylint
+      run: |
+        poetry run pylint maintainer.py
+        poetry run pylint config.py
+        poetry run pylint test_mot.py
+    - name: Run black
+      run: |
+        poetry run black --check .
+    - name: Run mypy
+      run: |
+        poetry run mypy maintainer.py
+        poetry run mypy config.py
+        poetry run mypy test_mot.py

@@ -4,7 +4,6 @@ It should be run in a first within runmanager, before the experiment is run, to 
 connection table. For more information, see https://docs.labscriptsuite.org/
 """
 
-
 from labscript import start, stop, AnalogOut, DigitalOut
 from labscript_devices.DummyPseudoclock.labscript_devices import DummyPseudoclock
 from labscript_devices.DummyIntermediateDevice import DummyIntermediateDevice

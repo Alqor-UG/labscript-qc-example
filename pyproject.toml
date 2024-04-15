@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "mot"
+version = "0.2.0"
+description = "A template for the cloud deployment of a labscript instance."
+authors = ["fretchen <fred.jendrzejewski@gmail.com>"]
+license = "Apache-2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-decouple = "^3.6"
+numpy = "^1.24.3"
+lyse = "^3.2.3"
+runmanager = "^3.2.1"
+sqooler = "^0.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.8.0"
+pylint = "^3.1.0"
+black = "^24.2.0"
+pytest = "^8.0.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

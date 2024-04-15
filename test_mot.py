@@ -2,43 +2,17 @@
 Test module for the mot file.
 """
 
-from typing import Union
-
 import pytest
 from pydantic import ValidationError
 
-
-from mot.config import (
+from sqooler.spoolers import gate_dict_from_list
+from sqooler.utils import run_json_circuit
+from config import (
     spooler_object as spooler,
     MotExperiment,
     MeasureBarrierInstruction,
     LoadInstruction,
 )
-
-from utils.schemes import gate_dict_from_list, ResultDict
-
-
-def run_json_circuit(json_dict: dict, job_id: Union[int, str]) -> ResultDict:
-    """
-    A support function that executes the job.
-
-    Args:
-        json_dict: the job dict that will be treated
-        job_id: the number of the job
-
-    Returns:
-        the results dict
-    """
-    status_msg_dict = {
-        "job_id": job_id,
-        "status": "None",
-        "detail": "None",
-        "error_message": "None",
-    }
-
-    result_dict, status_msg_dict = spooler.add_job(json_dict, status_msg_dict)
-    assert status_msg_dict["status"] == "DONE", "Job failed"
-    return result_dict
 
 
 def test_pydantic_exp_validation() -> None:
@@ -81,35 +55,30 @@ def test_barrier_instruction() -> None:
     """
     inst_list = ["barrier", [0], []]
     gate_dict = gate_dict_from_list(inst_list)
-    assert gate_dict == {
-        "name": inst_list[0],
-        "wires": inst_list[1],
-        "params": inst_list[2],
-    }
-    MeasureBarrierInstruction(**gate_dict)
+    MeasureBarrierInstruction(**gate_dict.model_dump())
     # test that the name is nicely fixed
     with pytest.raises(ValidationError):
         poor_inst_list = ["barriers", [7], []]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        MeasureBarrierInstruction(**gate_dict)
+        MeasureBarrierInstruction(**gate_dict.model_dump())
 
     # test that we cannot give too many wires
     with pytest.raises(ValidationError):
         poor_inst_list = ["barrier", [0, 1, 2, 3, 4, 5, 6, 7, 8], []]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        MeasureBarrierInstruction(**gate_dict)
+        MeasureBarrierInstruction(**gate_dict.model_dump())
 
     # make sure that the wires cannot be above the limit
     with pytest.raises(ValidationError):
         poor_inst_list = ["barrier", [8], []]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        MeasureBarrierInstruction(**gate_dict)
+        MeasureBarrierInstruction(**gate_dict.model_dump())
 
     # make sure that the parameters are enforced to be empty
     with pytest.raises(ValidationError):
         poor_inst_list = ["barrier", [7], [2.3]]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        MeasureBarrierInstruction(**gate_dict)
+        MeasureBarrierInstruction(**gate_dict.model_dump())
 
 
 def test_load_measure_instruction() -> None:
@@ -118,45 +87,35 @@ def test_load_measure_instruction() -> None:
     """
     inst_list = ["load", [0], [2]]
     gate_dict = gate_dict_from_list(inst_list)
-    assert gate_dict == {
-        "name": inst_list[0],
-        "wires": inst_list[1],
-        "params": inst_list[2],
-    }
-    LoadInstruction(**gate_dict)
+    LoadInstruction(**gate_dict.model_dump())
 
     inst_list = ["measure", [0], []]
     gate_dict = gate_dict_from_list(inst_list)
-    assert gate_dict == {
-        "name": inst_list[0],
-        "wires": inst_list[1],
-        "params": inst_list[2],
-    }
-    MeasureBarrierInstruction(**gate_dict)
+    MeasureBarrierInstruction(**gate_dict.model_dump())
 
     # test that the name is nicely fixed
     with pytest.raises(ValidationError):
         poor_inst_list = ["loads", [0], []]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        LoadInstruction(**gate_dict)
+        LoadInstruction(**gate_dict.model_dump())
 
     # test that we cannot give too many wires
     with pytest.raises(ValidationError):
         poor_inst_list = ["load", [0, 1], [2]]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        LoadInstruction(**gate_dict)
+        LoadInstruction(**gate_dict.model_dump())
 
     # make sure that the wires cannot be above the limit
     with pytest.raises(ValidationError):
         poor_inst_list = ["load", [2], [3]]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        LoadInstruction(**gate_dict)
+        LoadInstruction(**gate_dict.model_dump())
 
     # make sure that the parameters are enforced to be empty
     with pytest.raises(ValidationError):
         poor_inst_list = ["measure", [0], [2.3]]
         gate_dict = gate_dict_from_list(poor_inst_list)
-        LoadInstruction(**gate_dict)
+        LoadInstruction(**gate_dict.model_dump())
 
 
 def test_load_gate() -> None:
@@ -178,9 +137,11 @@ def test_load_gate() -> None:
     }
 
     job_id = "81"
-    data = run_json_circuit(job_payload, job_id)
+    data = run_json_circuit(job_payload, job_id, spooler)
 
-    shots_array = data["results"][0]["data"]["memory"]
+    shots_array = data["results"][0]["data"][  # pylint: disable=unsubscriptable-object
+        "memory"
+    ]
     print(shots_array)
     assert data["job_id"] == job_id, "job_id got messed up"
     assert len(shots_array) == 2, "shots_array got messed up"
@@ -205,7 +166,7 @@ def test_number_experiments() -> None:
         },
     }
     job_id = "21"
-    data = run_json_circuit(job_payload, job_id)
+    data = run_json_circuit(job_payload, job_id, spooler)
 
     shots_array = data["results"][0]["data"]["memory"]
     assert data["job_id"] == job_id, "job_id got messed up"
@@ -229,7 +190,7 @@ def test_number_experiments() -> None:
         job_payload[f"experiment_{ii}"] = inst_dict
     job_id = "1"
     with pytest.raises(AssertionError):
-        data = run_json_circuit(job_payload, job_id)
+        data = run_json_circuit(job_payload, job_id, spooler)
 
 
 def test_spooler_config() -> None:
@@ -240,10 +201,11 @@ def test_spooler_config() -> None:
     config_dict = {
         "description": ("Setup of an atomic mot."),
         "version": "0.1",
+        "display_name": "",
         "cold_atom_type": "spin",
         "gates": [],
         "max_experiments": 1000,
-        "max_shots": 1000000,
+        "max_shots": 100,
         "simulator": True,
         "supported_instructions": [
             "barrier",
@@ -254,9 +216,13 @@ def test_spooler_config() -> None:
         "wire_order": "interleaved",
         "num_species": 1,
         "operational": True,
+        "pending_jobs": None,
+        "status_msg": None,
+        "last_queue_check": None,
+        "sign": False,
     }
-    spooler_config_dict = spooler.get_configuration()
-    assert spooler_config_dict == config_dict
+    spooler_config = spooler.get_configuration()
+    assert spooler_config.model_dump() == config_dict
 
 
 def test_add_job() -> None:
@@ -278,16 +244,13 @@ def test_add_job() -> None:
     }
 
     job_id = "41"
-    status_msg_dict = {
-        "job_id": job_id,
-        "status": "None",
-        "detail": "None",
-        "error_message": "None",
-    }
-    result_dict, status_msg_dict = spooler.add_job(job_payload, status_msg_dict)
+
+    result_dict = run_json_circuit(job_payload, job_id, spooler)
     # assert that all the elements in the result dict memory are of string '1 0'
     expected_value = "31"
-    for element in result_dict["results"][0]["data"]["memory"]:
+    for element in result_dict["results"][0][  # pylint: disable=unsubscriptable-object
+        "data"
+    ]["memory"]:
         assert (
             element == expected_value
         ), f"Element {element} is not equal to {expected_value}"

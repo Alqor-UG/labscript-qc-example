@@ -1,6 +1,7 @@
 """
 The start of the labscript experimental sequence.
 """
+
 from labscript import start, stop, add_time_marker, AnalogOut, DigitalOut
 from labscript_devices.DummyPseudoclock.labscript_devices import DummyPseudoclock
 from labscript_devices.DummyIntermediateDevice import DummyIntermediateDevice
@@ -51,7 +52,10 @@ def func(shot_context: dict, t: str) -> None:
         # Read the number from the CSV file (assuming it's in the first row)
         for row in csv_reader:
             if len(row) > 0:
-                number_from_csv = int(row[0])  # Assuming the number is an integer
+                number_from_csv = int(
+                    float(row[0])
+                )  # Assuming the number is an integer
+
     run = Run(shot_context.h5_file)
     run.save_result("nat", number_from_csv, group="/measure")
 

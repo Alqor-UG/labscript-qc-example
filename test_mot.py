@@ -2,7 +2,9 @@
 Test module for the mot file.
 """
 
+import uuid
 import pytest
+from typing import Iterator
 from pydantic import ValidationError
 
 from sqooler.spoolers import gate_dict_from_list
@@ -136,7 +138,9 @@ def test_load_gate() -> None:
         },
     }
 
-    job_id = "81"
+    dummy_id = uuid.uuid4().hex[:5]
+    job_id = f"{dummy_id}"
+
     data = run_json_circuit(job_payload, job_id, spooler)
 
     shots_array = data["results"][0]["data"][  # pylint: disable=unsubscriptable-object
@@ -165,7 +169,9 @@ def test_number_experiments() -> None:
             "wire_order": "interleaved",
         },
     }
-    job_id = "21"
+    dummy_id = uuid.uuid4().hex[:5]
+    job_id = f"{dummy_id}"
+
     data = run_json_circuit(job_payload, job_id, spooler)
 
     shots_array = data["results"][0]["data"]["memory"]
@@ -188,7 +194,9 @@ def test_number_experiments() -> None:
     job_payload = {}
     for ii in range(n_exp):
         job_payload[f"experiment_{ii}"] = inst_dict
-    job_id = "1"
+
+    dummy_id = uuid.uuid4().hex[:5]
+    job_id = f"{dummy_id}"
     with pytest.raises(AssertionError):
         data = run_json_circuit(job_payload, job_id, spooler)
 
@@ -243,7 +251,8 @@ def test_add_job() -> None:
         },
     }
 
-    job_id = "41"
+    dummy_id = uuid.uuid4().hex[:5]
+    job_id = f"{dummy_id}"
 
     result_dict = run_json_circuit(job_payload, job_id, spooler)
     # assert that all the elements in the result dict memory are of string '1 0'

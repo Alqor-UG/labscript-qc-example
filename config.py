@@ -96,4 +96,5 @@ spooler_object = LabscriptSpooler(
     n_max_experiments=MAX_EXPERIMENTS,
     n_max_shots=N_MAX_SHOTS,
     operational=True,
+    sign=True,
 )

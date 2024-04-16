@@ -1,6 +1,10 @@
 """
 The module that contains all the necessary logic for processing jobs in the database queue.
+
+This has to be adopted on each instance to fit the specific needs of the experiment.
 """
+
+import logging
 
 from decouple import config
 
@@ -30,7 +34,9 @@ login_dict = {
 mongodb_login = MongodbLoginInformation(**login_dict)
 storage_provider = MongodbProvider(mongodb_login)
 
-print("Update")
+logging.basicConfig(level=logging.INFO)
+
+logging.info("Update")
 update_backends(storage_provider, backends)
-print("Now run as usual.")
+logging.info("Now run as usual.")
 main(storage_provider, backends)

@@ -34,7 +34,7 @@ login_dict = {
 mongodb_login = MongodbLoginInformation(**login_dict)
 storage_provider = MongodbProvider(mongodb_login)
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARNING)
 
 logging.info("Update")
 update_backends(storage_provider, backends)

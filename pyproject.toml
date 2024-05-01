@@ -19,7 +19,7 @@ sqooler = {git = "https://github.com/Alqor-UG/sqooler.git"}
 mypy = "^1.8.0"
 pylint = "^3.1.0"
 black = "^24.2.0"
-pytest = "^8.0.2"
+pytest = "^8.2.0"
 pre-commit = "^3.7.0"
 
 [build-system]

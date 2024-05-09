@@ -226,7 +226,7 @@ def test_spooler_config() -> None:
         "status_msg": None,
         "last_queue_check": None,
         "sign": True,
-        "kid": None
+        "kid": None,
     }
     spooler_config = spooler.get_configuration()
     assert spooler_config.model_dump() == config_dict

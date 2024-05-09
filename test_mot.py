@@ -207,7 +207,7 @@ def test_spooler_config() -> None:
     """
     config_dict = {
         "description": ("Setup of an atomic mot."),
-        "version": "0.1",
+        "version": "0.2",
         "display_name": "",
         "cold_atom_type": "spin",
         "gates": [],
@@ -222,11 +222,11 @@ def test_spooler_config() -> None:
         "num_wires": 1,
         "wire_order": "interleaved",
         "num_species": 1,
-        "operational": True,
         "pending_jobs": None,
         "status_msg": None,
         "last_queue_check": None,
         "sign": True,
+        "kid": None
     }
     spooler_config = spooler.get_configuration()
     assert spooler_config.model_dump() == config_dict

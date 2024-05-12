@@ -91,10 +91,9 @@ spooler_object = LabscriptSpooler(
     labscript_params=labscript_params,
     run=Run,
     n_wires=1,
-    version="0.1",
+    version="0.2",
     description="Setup of an atomic mot.",
     n_max_experiments=MAX_EXPERIMENTS,
     n_max_shots=N_MAX_SHOTS,
-    operational=True,
     sign=True,
 )
